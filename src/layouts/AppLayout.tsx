@@ -13,7 +13,7 @@ export default function AppLayout() {
           <NavMenu />
         </div>
       </header>
-      <section className="max-w-screen-2xl mt-10 py-5 px-30">
+      <section className="w-full md:max-w-screen-2xl mt-10 py-5 px-30">
       <Outlet />
       </section>
       <footer className="py-5 bg-gray-900">

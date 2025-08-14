@@ -1,21 +1,15 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
-import ErrorMessage from "./ErrorMessage";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import ErrorMessage from "../ErrorMessage";
+import { ProjectFormData } from "@/types";
 
-type ProjetcFormProps = {
-  register: UseFormRegister<{
-    projectName: string;
-    clientName: string;
-    description: string;
-}>
-errors: FieldErrors<{
-    projectName: string;
-    clientName: string;
-    description: string;
-}>
+type ProjectFormProps = {
+    register: UseFormRegister<ProjectFormData>
+    errors: FieldErrors<ProjectFormData>
 }
-export default function ProjectForm({errors, register}: ProjetcFormProps) {
+
+export default function ProjectForm({errors, register}: ProjectFormProps) {
     return (
-        <>
+        <>  
             <div className="mb-5 space-y-3">
                 <label htmlFor="projectName" className="text-sm uppercase font-bold">
                     Nombre del Proyecto

@@ -1,0 +1,11 @@
+
+function App() {
+
+  return (
+    <>
+    <h1 className="text-center text-7xl text-green-500">Hola Mundo</h1>
+    </>
+  )
+}
+
+export default App

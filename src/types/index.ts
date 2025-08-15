@@ -11,7 +11,7 @@ export const taskSchema = z.object({
 });
 
 export type Task = z.infer<typeof taskSchema>
-export type TaskFormData = Pick<Task,'_id'| 'name'| 'description'>
+export type TaskFormData = Pick<Task, 'name'| 'description'>
 
 /* Project  */
 export const projectSchema = z.object({

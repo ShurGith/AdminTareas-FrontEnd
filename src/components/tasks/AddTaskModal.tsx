@@ -1,27 +1,53 @@
 import { Fragment } from "react";
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle, } from "@headlessui/react";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form';
 import TaskForm from "./TaskForm";
 import { TaskFormData } from "@/types";
+import { createTask } from "@/api/TasksAPI";
+import { useMutation, useQueryClient} from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export default function AddTaskModal() {
   const navigate = useNavigate();
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const newTask = queryParams.get("newTask");
   const show = newTask ? true : false
 
+  /** Obtener projectId de la url **/
+  const params = useParams();
+  const projectId = params.projectId!
+
+
   const inititalValues: TaskFormData = {
-    _id: "",
     name: "",
     description: ""
   }
-  const { register, handleSubmit, formState: { errors } } = useForm<TaskFormData>({ defaultValues: inititalValues });
+  const { register, handleSubmit, reset,formState: { errors } } = useForm<TaskFormData>({ defaultValues: inititalValues });
+//const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: createTask,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      reset()
+      toast.success('Tarea creada correctamente')
+      navigate(location.pathname, { replace: true })
+    }
+  });
 
-  const handleCreateTask = (data: TaskFormData) => {
-    console.log(data)
-  } 
+
+  const handleCreateTask = (formData: TaskFormData) => {
+    const data = {
+      formData,
+      projectId
+    }
+    mutate(data);
+  }
+
 
   return (
     <>

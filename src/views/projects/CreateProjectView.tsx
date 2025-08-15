@@ -1,5 +1,6 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import ProjectForm from "@/components/projects/ProjectForm";
 import { ProjectFormData } from "@/types/index";
@@ -16,16 +17,20 @@ export default function CreateProjectView() {
 
   const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues }) //register es una funcion que nos permite registrar los inputs del formulario y handleSubmit es una funcion que nos permite enviar el formulario. formState es un objeto que contiene la informacion de los campos del formulario. 
 
-  const handleForm = async  (formData: ProjectFormData) =>{
-    const data = await createProject(formData);
-    if(data) {
-      toast.success("Proyecto creado correctamente");
+  const {mutate} = useMutation({
+    mutationFn: createProject,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success(`El proyecto ${data.projectName} se creo correctamente.`);
       navigate('/');
-    }else{
-      toast.error('Hubo un error al crear el proyecto');
     }
-  }
+  });
 
+
+  //? No hace falta poner el async ni eel await porque ya esta en el mutateAsync 
+  const handleForm = (formData: ProjectFormData) => mutate(formData);
 
   return (
     <>
@@ -47,7 +52,7 @@ export default function CreateProjectView() {
         noValidate
         autoComplete='off'
       >
-        <ProjectForm 
+        <ProjectForm
           register={register}
           errors={errors}
         />

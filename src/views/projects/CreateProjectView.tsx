@@ -6,7 +6,6 @@ import ProjectForm from "@/components/projects/ProjectForm";
 import { ProjectFormData } from "@/types/index";
 import { createProject } from "@/api/ProjectAPI";
 
-
 export default function CreateProjectView() {
   const navigate = useNavigate();
   const initialValues: ProjectFormData = {

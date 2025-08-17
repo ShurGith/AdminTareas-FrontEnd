@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Logo from "@/components/Logo";
 import NavMenu from "@/components/NavMenu";
@@ -24,12 +24,15 @@ export default function AppLayout() {
         </p>
       </footer>
       <ToastContainer 
-        pauseOnHover={false}
+        pauseOnHover={true}
         pauseOnFocusLoss={false}
-        autoClose={5000}
-        theme='dark'
+        autoClose={3000}
+        theme='colored'
         closeOnClick={true}
-        position='top-right' />
+        position='top-right'     
+        draggable={true}
+        transition={Bounce}
+        />
     </>
   )
 }

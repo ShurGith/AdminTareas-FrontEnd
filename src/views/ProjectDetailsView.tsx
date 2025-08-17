@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getProjectById } from "@/api/ProjectAPI";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
 import TaskList from "@/components/tasks/TaskList";
+import EditTaskData from "@/components/tasks/EditTaskData";
 
 export default function ProjectDetailsView() {
   const navigate = useNavigate();
@@ -11,11 +12,10 @@ export default function ProjectDetailsView() {
 
   //*Obtenemos los datos de la API para editar el proyecto
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['editProject', projectId],
-    queryFn: () => getProjectById(projectId as string),
+    queryKey: ['project', projectId],
+    queryFn: () => getProjectById(projectId),
     retry: false, // Intenta nuevamente si falla// No vuelve a consultar hasta que se actualice manualmente o expire el tiempo de vida
   });
-  console.log(data); 
 
   return (
     <div>
@@ -33,10 +33,12 @@ export default function ProjectDetailsView() {
           className="bg-fuchsia-600 hover:bg-fuchsia-700 px-3 py-2 rounded-md text-white mt-5 cursor-pointer">
           Añadir tarea</button>
       </>}    
-      <AddTaskModal/>
       <TaskList 
         tasks={data?.tasks || []}
-      /> 
+        /> 
+        <AddTaskModal/>
+        <EditTaskData />
+  
     </div>
   )
 }

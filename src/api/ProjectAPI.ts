@@ -47,7 +47,7 @@ export async function getProjectById(id: Project['_id']) {
       return response.data
     }
   } catch (err) {
-    console.error("Error al obtener proyectos", err)
+    console.error("Error al obtener el proyecto", err)
   }
 }
 

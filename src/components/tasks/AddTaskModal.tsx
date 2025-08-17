@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import TaskForm from "./TaskForm";
 import { TaskFormData } from "@/types";
 import { createTask } from "@/api/TasksAPI";
-import { useMutation, useQueryClient} from "@tanstack/react-query";
+import { useMutation} from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 export default function AddTaskModal() {

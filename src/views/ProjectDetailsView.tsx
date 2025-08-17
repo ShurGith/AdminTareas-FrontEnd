@@ -2,6 +2,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProjectById } from "@/api/ProjectAPI";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
+import TaskList from "@/components/tasks/TaskList";
 
 export default function ProjectDetailsView() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function ProjectDetailsView() {
     queryFn: () => getProjectById(projectId as string),
     retry: false, // Intenta nuevamente si falla// No vuelve a consultar hasta que se actualice manualmente o expire el tiempo de vida
   });
+  console.log(data); 
 
   return (
     <div>
@@ -32,6 +34,9 @@ export default function ProjectDetailsView() {
           Añadir tarea</button>
       </>}    
       <AddTaskModal/>
+      <TaskList 
+        tasks={data?.tasks || []}
+      /> 
     </div>
   )
 }

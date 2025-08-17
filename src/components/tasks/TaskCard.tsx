@@ -2,12 +2,14 @@ import { Fragment } from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { Task } from "@/types"
+import { useNavigate } from 'react-router-dom';
 //import { Fragment } from 'react/jsx-runtime'
 
 type TaskCardProps = {
   task: Task;
 }
 export default function TaskCard({ task }: TaskCardProps) {
+  const navigate = useNavigate()
   return (
     <>
       <li className="p-5 bg-white border border-slate-300 rounded-md shadow-sm flex justify-between gap-3">
@@ -20,7 +22,7 @@ export default function TaskCard({ task }: TaskCardProps) {
           <Menu as="div" className="relative flex-none">
             <MenuButton className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
               <span className="sr-only">opciones</span>
-              <EllipsisVerticalIcon className="h-9 w-9" aria-hidden="true" />
+              <EllipsisVerticalIcon className="h-9 w-9  cursor-pointer" aria-hidden="true" />
             </MenuButton>
             <Transition
               as={Fragment}
@@ -35,7 +37,7 @@ export default function TaskCard({ task }: TaskCardProps) {
                 <MenuItem>
                   <button
                     type="button"
-                    className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                    className="block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer"
                   >
                     Ver Tarea
                   </button>
@@ -43,7 +45,8 @@ export default function TaskCard({ task }: TaskCardProps) {
                 <MenuItem>
                   <button
                     type="button"
-                    className="block px-3 py-1 text-sm leading-6 text-gray-900"
+                    className="block px-3 py-1 text-sm leading-6 text-gray-900 cursor-pointer"
+                    onClick={() => navigate(location.pathname + `/tasks/${task._id}`)}
                   >
                     Editar Tarea
                   </button>

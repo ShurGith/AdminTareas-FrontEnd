@@ -14,19 +14,16 @@ export default function ConfirmAccountView() {
     mutationFn: confirmAccount,
     onSuccess: (data) => {
       toast.success(data);
-      
     },
     onError: (error) => {
       toast.error(error.message);
     },
   })
 
-  const handleChange = (token: ConfirmToken['token']) => {
-    setToken(token);
-  };
-  
+  const handleChange = (token: ConfirmToken['token']) => setToken(token);
+
    const handleComplete = (token: ConfirmToken['token']) => mutate({ token });
-   
+
   return (
     <>
       <h1 className="text-5xl font-black text-white">Confirma tu Cuenta</h1>
@@ -55,7 +52,7 @@ export default function ConfirmAccountView() {
 
       <nav className="mt-10 flex flex-col space-y-4">
         <Link
-          to='/auth/new-code'
+          to='/auth/request-code'
           className="text-center text-gray-300 font-normal"
         >
           Solicitar un nuevo Código

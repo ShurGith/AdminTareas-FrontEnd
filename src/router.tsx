@@ -5,6 +5,8 @@ import CreateProjectView from "./views/projects/CreateProjectView";
 import EditProjectView from "./views/projects/EditProjectView";
 import Page404 from "./views/Page404";
 import ProjectDetailsView from "./views/ProjectDetailsView";
+import AuthLayout from "./layouts/AuthLayout";
+import LoginView from "./views/auth/LoginView";
 
 export default function Router() {
   return (
@@ -17,6 +19,9 @@ export default function Router() {
         <Route path="/projects/:projectId" element={<ProjectDetailsView />} />
         <Route path="/404" element={<Page404/>} />
         <Route path="*" element={<Page404/>}/>
+        </Route>
+        <Route element={<AuthLayout />} >
+          <Route path="/auth/login"  element={<LoginView />} />
         </Route>
       </Routes>
     </BrowserRouter>

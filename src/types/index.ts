@@ -1,4 +1,16 @@
 import { z } from "zod";
+ /* Auth & Users */
+ const authSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+  password_corfirmation: z.string(),
+ });
+
+type Auth = z.infer<typeof authSchema>;
+export type UserLoginForm = Pick<Auth,  | 'email' | 'password' >;
+
+
 
 /* Task  */
 export const taskStatusSchema = z.enum(["pending" , "onHold" ,"inProgress" ,"underReview" ,"completed"]);

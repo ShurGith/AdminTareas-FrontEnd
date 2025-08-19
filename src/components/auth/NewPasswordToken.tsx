@@ -29,7 +29,6 @@ export default function NewPasswordToken({token, setToken, setIsValidToken} : Ne
     }
 
     const handleComplete = (token: ConfirmToken['token']) => mutate({token})
-
     return (
         <>
             <form

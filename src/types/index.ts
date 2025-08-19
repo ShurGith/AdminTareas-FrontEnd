@@ -3,7 +3,7 @@ import { z } from "zod";
  // eslint-disable-next-line @typescript-eslint/no-unused-vars
  const authSchema = z.object({
     name: z.string(),
-    email: z.string().email(),
+    email: z.string(),
     current_password: z.string(),
     password: z.string(),
     password_confirmation: z.string(),

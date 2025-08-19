@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import { UserLoginForm } from "@/types/index";
 import ErrorMessage from "@/components/ErrorMessage";
 import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { authenticateUser } from "@/api/AuthAPi";
+import { toast } from "react-toastify";
 
 export default function LoginView() {
 
@@ -9,13 +12,26 @@ export default function LoginView() {
     email: '',
     password: '',
   }
-  const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues: initialValues })
 
-  const handleLogin = (formData: UserLoginForm) => { }
+  const { mutate } = useMutation({
+    mutationFn: authenticateUser,
+    retry: false,
+    onSuccess: (data) => {
+      toast.success(data);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      reset();
+    }
+  });
+
+  const handleLogin = (formData: UserLoginForm) => mutate(formData)
 
   return (
     <>
-        <h1 className="text-3xl font-black text-white">Conectarse a tu cuenta</h1>
+      <h1 className="text-3xl font-black text-white">Conectarse a tu cuenta</h1>
       <p className="text-xl font-light text-white mt-5">
         Llena el formulario para {''}
         <span className=" text-fuchsia-500 font-bold">&nbsp; conectarte</span>
@@ -78,6 +94,12 @@ export default function LoginView() {
           className="text-center text-gray-300 hover:text-gray-500 font-normal"
         >
           ¿No tienes una cuenta? Regístrate
+        </Link>
+        <Link
+          to={"/auth/forgot-password"}
+          className="text-center text-gray-300 hover:text-gray-500 font-normal"
+        >
+          ¿Olvidate tu password? Resetealo aqui
         </Link>
       </nav>
     </>

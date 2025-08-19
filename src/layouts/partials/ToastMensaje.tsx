@@ -6,7 +6,7 @@ function ToastMensaje() {
         pauseOnHover={true}
         pauseOnFocusLoss={false}
         autoClose={3000}
-        theme='colored'
+        theme='light'
         closeOnClick={true}
         position='top-right'
         draggable={true}

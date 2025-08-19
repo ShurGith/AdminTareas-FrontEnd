@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
-import { ConfirmToken, RequestConfirmationCodeForm, UserRegistrationForm } from "@/types";
+import { ConfirmToken, ForgotPasswordForm, RequestConfirmationCodeForm, UserLoginForm, UserRegistrationForm } from "@/types";
 
 export async function createAccount(fromData: UserRegistrationForm ) {
   try {
@@ -27,6 +27,54 @@ export async function confirmAccount(formData: ConfirmToken) {
 export async function requestConfirmationCode(formData: RequestConfirmationCodeForm) {
     try {
         const url = '/auth/request-code'
+        const { data } = await api.post<string>(url, formData)
+        return data
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function authenticateUser(formData: UserLoginForm) {
+    try {
+        const url = '/auth/login'
+        const { data } = await api.post<string>(url, formData)
+        return data
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function requestResetPassword(formData: ForgotPasswordForm) {
+    try {
+        const url = '/auth/forgot-password'
+        const { data } = await api.post<string>(url, formData)
+        return data
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function validateToken(formData: ConfirmToken) {
+    try {
+        const url = '/auth/validate-token'
+        const { data } = await api.post<string>(url, formData)
+        return data
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function sendNewPassword(formData: ForgotPasswordForm) {
+    try {
+        const url = '/auth/forgot-password'
         const { data } = await api.post<string>(url, formData)
         return data
     } catch (error) {

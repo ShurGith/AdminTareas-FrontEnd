@@ -1,7 +1,0 @@
-VITE_API_URL=http://localhost:4000/api
-
-
-backEnd
-
-DATABASE_URL = mongodb+srv://JuanJota:xz8iLRklnzWQ2w7h@admin-tareas.tjd6xr7.mongodb.net/upstask_mern
-FRONTEND_URL = http://localhost:3000

@@ -49,6 +49,7 @@ export default function LoginView() {
           <input
             id="email"
             type="email"
+            autoComplete="email"
             placeholder="Email de Registro"
             className="w-full p-3  border-gray-300 border"
             {...register("email", {
@@ -71,6 +72,8 @@ export default function LoginView() {
 
           <input
             type="password"
+            id="password"
+            autoComplete="current-password"
             placeholder="Password de Registro"
             className="w-full p-3  border-gray-300 border"
             {...register("password", {

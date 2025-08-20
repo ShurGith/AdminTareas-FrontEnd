@@ -76,20 +76,20 @@ export default function DashboardView() {
                     >
                       <MenuItem>
                         <Link to={`/projects/${project._id}`}
-                          className='block px-3 py-1 text-sm leading-6 text-gray-900'>
+                          className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 rounded-md'>
                           Ver Proyecto
                         </Link>
                       </MenuItem>
                       <MenuItem>
                         <Link to={`/projects/${project._id}/edit`}
-                          className='block px-3 py-1 text-sm leading-6 text-gray-900'>
+                          className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 rounded-md'>
                           Editar Proyecto
                         </Link>
                       </MenuItem>
                       <MenuItem>
                         <button
                           type='button'
-                          className='block px-3 py-1 text-sm leading-6 text-red-500'
+                          className='block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-200 rounded-md w-full text-left cursor-pointer'
                           onClick={() => mutate(project._id) }
                         >
                           Eliminar Proyecto

@@ -5,17 +5,18 @@ import { Fragment } from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { toast } from "react-toastify";
+import { BarLoader } from 'react-spinners';
 export default function DashboardView() {
 
-  //? useQuery para obtener los datos
+  // useQuery para obtener los datos
   const { data, isLoading } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects,
   });
-  //? QueryClient forzar a que se vuelva a obtener los nuevos datos 
+  // QueryClient forzar a que se vuelva a obtener los nuevos datos 
   const queryClient = useQueryClient();
 
-  //? useMutation modificar los datos
+  // useMutation modificar los datos
   const { mutate } = useMutation({
     mutationFn:deleteProject,
     onSuccess: () => {
@@ -30,8 +31,12 @@ export default function DashboardView() {
   return (
     <>
       <h1 className="text-5xl font-black ">Mis Proyectos</h1>
+        {isLoading && <div
+        className="flex flex-col justify-center items-center "
+        ><BarLoader color="purple" height={8} width={500} loading={true} />
+        <p className="text-purple-500 text-xl animate-pulse">Cargando datos...</p>
+        </div>}
       <p className="text-2xl font-light text-gray-500 mt-5">
-        {isLoading && 'Cargando...'}
         {!isLoading && 'Maneja y administra tus proyectos de forma fácil y rápida.'}
       </p>
       {!isLoading &&
@@ -102,13 +107,13 @@ export default function DashboardView() {
             </li>
           ))}
         </ul>
-      ) : (
-        <p className="text-center py-20">No hay proyectos aún {' '}
+      ) : 
+      isLoading ? null :
+      <p className="text-center py-20">No hay proyectos aún {' '}
           <Link to='/projects/create'
             className="text-fuchsia-500 font-bold">Crear uno nuevo</Link>
         </p>
-      )}
-
+      }
     </>
   )
 }

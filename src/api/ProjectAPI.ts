@@ -22,15 +22,8 @@ export async function createProject(formData: ProjectFormData) {
 }
 
 export async function getProjects() {
-
-  const token = localStorage.getItem('AUTH_TOKEN')
-
   try {
-    const { data } = await api.get("/projects",{
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const { data } = await api.get("/projects")
     const response = dashboardProjectsSchema.safeParse(data);
     if (!response.success) {
       throw new Error("No se pudo obtener los proyectos")

@@ -1,7 +1,8 @@
+
 import { z } from "zod";
- /* Auth & Users */
- // eslint-disable-next-line @typescript-eslint/no-unused-vars
- const authSchema = z.object({
+
+/* Auth & Users */ 
+export const authSchema = z.object({
     name: z.string(),
     email: z.string(),
     current_password: z.string(),
@@ -20,6 +21,14 @@ export type UpdateCurrentUserPasswordForm = Pick<Auth, 'current_password' | 'pas
 export type ConfirmToken = Pick<Auth, 'token'>
 export type CheckPasswordForm = Pick<Auth, 'password'>
 
+/* User */
+export const userSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  email: z.string()
+});
+
+export type User = z.infer<typeof userSchema>
 
 /* Task  */
 export const taskStatusSchema = z.enum(["pending" , "onHold" ,"inProgress" ,"underReview" ,"completed"]);

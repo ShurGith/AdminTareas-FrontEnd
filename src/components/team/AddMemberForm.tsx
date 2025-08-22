@@ -6,6 +6,7 @@ import { TeamMemberForm } from "@/types";
 import { findUserByEmail } from "@/api/TeamAPI";
 import SearchResult from "./SearchResult";
 
+
 export default function AddMemberForm() {
     const initialValues: TeamMemberForm = {
         email: ''
@@ -65,9 +66,9 @@ export default function AddMemberForm() {
                     value='Buscar Usuario'
                 />
             </form>
-            {mutation.isPending && <p className="text-center text-xl font-bold">Buscando...</p>}
-            {mutation.isError && <h5 className="text-center text-xl mx-auto w-fit mt-4 text-white bg-red-800 shadow-xl/50 shadow-black/70 px-4 py-2">Usuario No Encontrado</h5>}
-            {mutation.isSuccess && <SearchResult user={mutation.data} reset={resetData} />}
+        
+            {mutation.isError && <h5 className="text-center text-xl mx-auto w-fit mt-4 text-white bg-red-800 shadow-xl/50 shadow-black/70 px-4 py-2"> Usuario No encontrado</h5>}
+            {mutation.isSuccess && <SearchResult user={mutation.data.user} managerId={mutation.data.project.manager} reset={resetData} />}
         </>
     )
 }

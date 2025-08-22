@@ -6,8 +6,10 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { toast } from "react-toastify";
 import { BarLoader } from 'react-spinners';
+import { useAuth } from "@/hooks/useAuth";
 export default function DashboardView() {
-
+  // useAuth para saber si esta logueado o no
+  const { data: userAuth, isLoading: authLoading } = useAuth()
   // useQuery para obtener los datos
   const { data, isLoading } = useQuery({
     queryKey: ['projects'],
@@ -18,24 +20,26 @@ export default function DashboardView() {
 
   // useMutation modificar los datos
   const { mutate } = useMutation({
-    mutationFn:deleteProject,
+    mutationFn: deleteProject,
     onSuccess: () => {
       toast.success('Proyecto eliminado correctamente')
-      queryClient.invalidateQueries({queryKey: ['projects']})
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
     onError: (error) => {
       toast.error(`Error al eliminar el proyecto: ${error.message}`)
     },
   })
+  console.log(data);
+  console.log(userAuth?._id);
 
   return (
     <>
       <h1 className="text-5xl font-black ">Mis Proyectos</h1>
-        {isLoading && <div
+      {isLoading && authLoading && <div
         className="flex flex-col justify-center items-center "
-        ><BarLoader color="purple" height={8} width={500} loading={true} />
+      ><BarLoader color="purple" height={8} width={500} loading={true} />
         <p className="text-purple-500 text-xl animate-pulse">Cargando datos...</p>
-        </div>}
+      </div>}
       <p className="text-2xl font-light text-gray-500 mt-5">
         {!isLoading && 'Maneja y administra tus proyectos de forma fácil y rápida.'}
       </p>
@@ -48,7 +52,6 @@ export default function DashboardView() {
           </Link>
         </nav>
       }
-
       {data?.length ? (
         <ul role="list" className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg">
           {data.map((project) => (
@@ -85,21 +88,26 @@ export default function DashboardView() {
                           Ver Proyecto
                         </Link>
                       </MenuItem>
-                      <MenuItem>
-                        <Link to={`/projects/${project._id}/edit`}
-                          className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 rounded-md'>
-                          Editar Proyecto
-                        </Link>
-                      </MenuItem>
-                      <MenuItem>
-                        <button
-                          type='button'
-                          className='block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-200 rounded-md w-full text-left cursor-pointer'
-                          onClick={() => mutate(project._id) }
-                        >
-                          Eliminar Proyecto
-                        </button>
-                      </MenuItem>
+                      {/* //& ~ INICIO Solo mostrar opciones si es el manager del proyecto */}
+                      {project.manager === userAuth?._id &&
+                        <div>
+                          <MenuItem>
+                            <Link to={`/projects/${project._id}/edit`}
+                              className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors duration-200 rounded-md'>
+                              Editar Proyecto
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <button
+                              type='button'
+                              className='block px-3 py-1 text-sm leading-6 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-200 rounded-md w-full text-left cursor-pointer'
+                              onClick={() => mutate(project._id)}
+                            >
+                              Eliminar Proyecto
+                            </button>
+                          </MenuItem>
+                        </div>}
+                      {/* //& ~ Fin solo mostrar opciones si es el manager del proyecto */}
                     </MenuItems>
                   </Transition>
                 </Menu>
@@ -107,12 +115,12 @@ export default function DashboardView() {
             </li>
           ))}
         </ul>
-      ) : 
-      isLoading ? null :
-      <p className="text-center py-20">No hay proyectos aún {' '}
-          <Link to='/projects/create'
-            className="text-fuchsia-500 font-bold">Crear uno nuevo</Link>
-        </p>
+      ) :
+        isLoading ? null :
+          <p className="text-center py-20">No hay proyectos aún {' '}
+            <Link to='/projects/create'
+              className="text-fuchsia-500 font-bold">Crear uno nuevo</Link>
+          </p>
       }
     </>
   )

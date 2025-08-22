@@ -14,7 +14,6 @@ export async function createProject(formData: ProjectFormData) {
       for (let i = 0; i < errores.length; i++) {
         message += i + 1 + " - " + (errores[i].msg + "\n");
       }
-      //message+= error.response.status
       console.log(message)
       throw new Error(`Tienes un error ${error.response.status} - Revisa la consola para ver los errores`);
     }
@@ -51,7 +50,6 @@ export async function getProjectById(id: Project['_id']) {
   }
 }
 
-
 type ProjectApiType = {
   formData: ProjectFormData
   projectId: Project['_id']
@@ -68,7 +66,7 @@ export async function updateProject({ formData, projectId }: ProjectApiType) {
       for (let i = 0; i < errores.length; i++) {
         message += i + 1 + " - " + (errores[i].msg + "\n");
       }
-      //message+= error.response.status
+      
       console.log(message)
       throw new Error(`Tienes un error ${error.response.status} - Revisa la consola para ver los errores`);
     }
@@ -87,7 +85,7 @@ export async function deleteProject(id: Project['_id']) {
       for (let i = 0; i < errores.length; i++) {
         message += i + 1 + " - " + (errores[i].msg + "\n");
       }
-      //message+= error.response.status
+      
       console.log(message)
       throw new Error(`Tienes un error ${error.response.status} - Revisa la consola para ver los errores`);
     }

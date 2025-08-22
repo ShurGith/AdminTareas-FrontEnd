@@ -31,8 +31,7 @@ export default function ProjectTeamView() {
 
   })
 
-
-
+console.log(data);
 
   if (isLoading) return <p>Cargando...</p>
   if (isError) return <p className="text-red-600 font-bold">Error al cargar los integrantes del equipo</p>
@@ -87,8 +86,7 @@ if(data)  return (
                           onClick={()=>mutate({projectId,userId:member._id})}
                           type='button'
                           className='block px-3 py-1 text-sm leading-6 w-full text-left  text-red-500 cursor-pointer hover:bg-red-500 hover:text-white'
-                        >
-                          Eliminar del Proyecto
+                        >  Eliminar Colaborador
                         </button>
                       </MenuItem>
                     </MenuItems>

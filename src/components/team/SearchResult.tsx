@@ -1,5 +1,5 @@
 import { addUserToProject } from '@/api/TeamAPI';
-import { TeamMember } from '@/types'
+import { TeamMember, User } from '@/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 type SearchResultProps = {
   user: TeamMember
   reset: () => void
-  managerId: string
+  managerId: User['_id']
 }
 export default function SearchResult({ user, managerId, reset }: SearchResultProps) {
   const params = useParams<{ projectId: string }>();

@@ -1,4 +1,4 @@
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import ErrorMessage from "../ErrorMessage";
@@ -30,12 +30,12 @@ export default function AddMemberForm() {
     mutation.reset();
   }
 
-  const cuentaletras = (e: React.ChangeEvent<HTMLInputElement>) =>{
-    if(e.target.value.length >= 3){
-     mutation.reset()
+  const cuentaletras = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length >= 3) {
+      mutation.reset()
     }
   }
-
+  
   return (
     <>
       <form
@@ -49,7 +49,7 @@ export default function AddMemberForm() {
             htmlFor="name"
           >E-mail de Usuario</label>
           <input
-           onInput={cuentaletras}
+            onInput={cuentaletras}
             id="name"
             type="text"
             placeholder="E-mail del usuario a Agregar"
@@ -75,7 +75,7 @@ export default function AddMemberForm() {
       </form>
 
       {mutation.isError && <h5 className="text-center text-xl mx-auto w-fit mt-4 text-white bg-red-800 shadow-xl/50 shadow-black/70 px-4 py-2"> Usuario No encontrado</h5>}
-      {mutation.isSuccess && <SearchResult user={mutation.data.user} managerId={mutation.data.project.manager} reset={resetData} />}
+      {mutation.isSuccess && <SearchResult user={mutation.data.user} managerId={mutation.data.project.manager}  reset={resetData} />}
     </>
   )
 }

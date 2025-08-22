@@ -25,7 +25,7 @@ export type CheckPasswordForm = Pick<Auth, 'password'>
 export const userSchema = z.object({
   _id: z.string(),
   name: z.string(),
-  email: z.string()
+  email: z.string(),
 });
 
 export type User = z.infer<typeof userSchema>
@@ -54,6 +54,7 @@ export const projectSchema = z.object({
   clientName: z.string(),
   description: z.string(),
   tasks: z.array(taskSchema),
+  manager:  z.string(),
 });
 
 
@@ -62,13 +63,13 @@ export const dashboardProjectsSchema = z.array(
     _id: true,
     projectName: true,
     clientName: true,
-    description: true
+    description: true,
+    manager: true,
   })
 ) 
 
 export type Project = z.infer<typeof projectSchema>
 export type ProjectFormData = Pick<Project, 'clientName' | 'projectName' | 'description'>
-
 
 /** Team  **/
 export const teamMemberSchema = userSchema.pick({
@@ -79,4 +80,6 @@ export const teamMemberSchema = userSchema.pick({
 export const teamMembersSchema = z.array(teamMemberSchema)
 export type TeamMember = z.infer<typeof teamMemberSchema>
 export type TeamMemberForm = Pick<TeamMember, 'email'>
+
+
 

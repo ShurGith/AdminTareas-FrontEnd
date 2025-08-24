@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { formatDate } from '@/utils/utils';
 import { statusTranslations } from "@/locales/es";
 import { TaskStatus } from '@/types';
+import TaskStatusCard from './TaskStatusCard';
 
 export default function TaskModalDetails() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function TaskModalDetails() {
   const params = useParams();
   const projectId = params.projectId!;
   const queryClient = useQueryClient();
+
 
   const { data, isError, error } = useQuery({
     queryKey: ['task', taskId],
@@ -43,12 +45,15 @@ export default function TaskModalDetails() {
     const status = e.target.value as TaskStatus
     const data = { projectId, taskId, status }
     mutate(data)
-
   };
 
   if (isError) {
     toast.error(error.message, { toastId: 'error' });
     return <Navigate to={`/projects/${params.projectId}`} />;
+  }
+
+  if (!data || !queryParams.has('viewTask')) {
+    return null;
   }
 
   if (data) return (
@@ -93,6 +98,13 @@ export default function TaskModalDetails() {
                   >{data.name}
                   </DialogTitle>
                   <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
+                  {data.completedBy && data.completedBy.length > 0 && (
+                    <div className="grid grid-cols-3 flex-wrap gap-2">
+                      {data.completedBy.map((activityLog) => (
+                        <TaskStatusCard key={activityLog._id} activityLog={activityLog} />
+                      ))}
+                    </div>
+                  )}
                   <div className='my-5 space-y-3'>
                     <label className='text-sm text-slate-500'>Estado Actual:{statusTranslations[data.status]}
                       <select

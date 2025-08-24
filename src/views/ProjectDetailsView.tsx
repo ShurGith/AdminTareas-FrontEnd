@@ -22,12 +22,9 @@ export default function ProjectDetailsView() {
     retry: false, // Intenta nuevamente si falla// No vuelve a consultar hasta que se actualice manualmente o expire el tiempo de vida
   });
 
-  console.log(data);
-
   const canEdit = useMemo(() => {
-     userAuth?._id === data?.manager
+    return userAuth?._id === data?.manager
   }, [userAuth, data])
-
 
   console.log(canEdit);
 
@@ -51,7 +48,8 @@ export default function ProjectDetailsView() {
             Colaboradores </Link>
         </nav>)}
       <TaskList
-        tasks={data?.tasks || []}
+        tasks={data.tasks}
+        canEdit={canEdit}
       />
       <AddTaskModal />
       <EditTaskData />

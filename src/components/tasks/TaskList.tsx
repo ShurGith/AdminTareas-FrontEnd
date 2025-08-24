@@ -1,35 +1,38 @@
-import { Task } from "@/types";
+import { TaskProject } from "@/types";
 import TaskCard from "./TaskCard";
 import { statusTranslations } from "@/locales/es";
+import { TASK_STATUS_VALUES, TASK_STATUS_CONFIG } from "@/utils/utils";
 
 type TaskListProps = {
-  tasks: Task[];
+  tasks: TaskProject[];
+  canEdit: boolean
 }
 
 type GroupedTasks = {
-  [key: string]: Task[];
-};
+  [key: string]: TaskProject[]
+}
+const losValores = TASK_STATUS_VALUES;
+const losColores = TASK_STATUS_CONFIG;
 
-const initiaStatusGroups: GroupedTasks = {
-  pending: [],
-  onHold: [],
-  inProgress: [],
-  underReview: [],
-  completed: [],
+const initialStatusGroups: GroupedTasks = {}
+
+const statusColors: { [key: string]: string } = {}
+
+for (let i = 0; i < losValores.length; i++) {
+  const value = losValores[i];
+  initialStatusGroups[value] = [];
+  statusColors[value] = losColores[value].borderTColorClass;
 }
-const statusColors: {[key: string]: string} = {
-  pending: 'border-t-blue-300',
-  onHold: 'border-t-red-300',
-  inProgress: 'border-t-orange-300',
-  underReview: 'border-t-yellow-300',
-  completed: 'border-t-green-300',
-}
-export default function TaskList({ tasks }: TaskListProps) {
-  const groupedTasks = tasks.reduce((acc, task) => {
+
+export default function TaskList({ tasks, canEdit }: TaskListProps) {
+  const groupedTasks = tasks!.reduce((acc, task) => {
     let currentGroup = acc[task.status] ? [...acc[task.status]] : [];
     currentGroup = [...currentGroup, task]
     return { ...acc, [task.status]: currentGroup };
-  }, initiaStatusGroups);
+  }, initialStatusGroups);
+
+
+
   return (
     <>
       <h2 className="text-5xl font-black my-10">Tareas</h2>
@@ -42,11 +45,13 @@ export default function TaskList({ tasks }: TaskListProps) {
               {tasks.length === 0 ? (
                 <li className="text-gray-500 text-center pt-3">No Hay tareas</li>
               ) : (
-                tasks.map(task => <TaskCard key={task._id} task={task} />)
+                tasks.map(task =>
+                  <TaskCard key={task._id} task={task} canEdit={canEdit} />)
               )}
             </ul>
           </div>
         ))}
+
       </div>
     </>
   )

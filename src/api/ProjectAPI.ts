@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { dashboardProjectsSchema, Project, ProjectFormData, projectSchema } from "@/types/index";
+import { dashboardProjectSchema, Project, ProjectFormData, projectSchema } from "@/types/index";
 import { isAxiosError } from "axios";
 
 export async function createProject(formData: ProjectFormData) {
@@ -23,7 +23,7 @@ export async function createProject(formData: ProjectFormData) {
 export async function getProjects() {
   try {
     const { data } = await api.get("/projects")
-    const response = dashboardProjectsSchema.safeParse(data);
+    const response = dashboardProjectSchema.safeParse(data);
     if (!response.success) {
       throw new Error("No se pudo obtener los proyectos")
     }
@@ -36,18 +36,19 @@ export async function getProjects() {
 }
 
 export async function getProjectById(id: Project['_id']) {
-  try {
-    const { data } = await api.get(`/projects/${id}`)
-    const response = projectSchema.safeParse(data);
-    if (!response.success) {
-      throw new Error("No se pudo obtener el proyecto")
+    try {
+        const { data } = await api.get(`/projects/${id}`)
+        const response = projectSchema.safeParse(data)
+        //  return data
+        console.log(response);
+        if(response.success) {
+            return response.data
+        }
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
     }
-    if (response.success) {
-      return response.data
-    }
-  } catch (err) {
-    console.error("Error al obtener el proyecto", err)
-  }
 }
 
 type ProjectApiType = {

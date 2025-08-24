@@ -18,24 +18,22 @@ export default function ProjectTeamView() {
     queryFn: () => getProjectTeam(projectId),
     retry: false,
   })
-  
+console.log(data);
   const { mutate } = useMutation({
-    mutationFn:removeUserFromProject,
-    onSuccess:(data)=>{
+    mutationFn: removeUserFromProject,
+    onSuccess: (data) => {
       toast.success(data)
-      queryClient.invalidateQueries({queryKey: ['projectTeam', projectId]});
+      queryClient.invalidateQueries({ queryKey: ['projectTeam', projectId] });
     },
-    onError:(error)=>{
+    onError: (error) => {
       toast.error(error.message)
     }
 
   })
 
-console.log(data);
-
   if (isLoading) return <p>Cargando...</p>
   if (isError) return <p className="text-red-600 font-bold">Error al cargar los integrantes del equipo</p>
-if(data)  return (
+  if (data) return (
     <>
       <h1 className="text-5xl font-black">Administrar Equipo</h1>
       <p className="text-2xl font-light text-gray-500 mb-5">Administra el equipo de trabajo para este proyecto.</p>
@@ -50,18 +48,19 @@ if(data)  return (
           className="bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-3 rounded-md cursor-pointer">
           Volver al Proyecto </Link>
       </nav>
-    {data.length ?  <h2 className="text-3xl font-black my-10">Miembros actuales</h2>: <p className='text-center py-20'>No hay miembros en este equipo</p>}
-      {data.length > 0 && 
-        <ul role="list" className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg">
+      {data.length ? <h2 className="text-3xl font-black my-10">Miembros actuales</h2> : <p className='text-center py-20'>No hay miembros en este equipo</p>}
+      {data.length > 0 &&
+        <ul role="list" 
+        className="grid grid-cols-2 mt-10  ">
           {data?.map((member) => (
-            <li key={member._id} className="flex justify-between gap-x-6 px-5 py-10">
+            <li key={member._id} className="flex justify-between gap-x-6 px-5 py-10 bg-white shadow-lg rounded">
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto space-y-2">
                   <p className="text-2xl font-black text-gray-600">
                     {member.name}
                   </p>
                   <p className="text-sm font-semibold leading-6 text-gray-900">
-                    {member.email}    
+                    {member.email}
                   </p>
                 </div>
               </div>
@@ -83,7 +82,7 @@ if(data)  return (
                     <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                       <MenuItem>
                         <button
-                          onClick={()=>mutate({projectId,userId:member._id})}
+                          onClick={() => mutate({ projectId, userId: member._id })}
                           type='button'
                           className='block px-3 py-1 text-sm leading-6 w-full text-left  text-red-500 cursor-pointer hover:bg-red-500 hover:text-white'
                         >  Eliminar Colaborador
@@ -94,7 +93,7 @@ if(data)  return (
                 </Menu>
               </div>
             </li>))}
-          
+
         </ul>}
       <AddMemberModal />
     </>

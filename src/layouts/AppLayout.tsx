@@ -8,7 +8,7 @@ export default function AppLayout() {
   return (
     <>
       <Header  />
-      <section className="w-full md:max-w-screen-2xl mt-10 py-5 px-30 mx-auto">
+      <section className="w-full md:max-w-screen-3xl mt-10 py-5 px-10 mx-auto">
         <Outlet  />
       </section>
       <Footer />

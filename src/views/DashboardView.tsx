@@ -7,6 +7,9 @@ import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { toast } from "react-toastify";
 import { BarLoader } from 'react-spinners';
 import { useAuth } from "@/hooks/useAuth";
+import Badges from "@/components/projects/Badges";
+import { isManager } from "@/utils/policies";
+
 export default function DashboardView() {
   // useAuth para saber si esta logueado o no
   const { data: userAuth, isLoading: authLoading } = useAuth()
@@ -53,11 +56,15 @@ export default function DashboardView() {
         </nav>
       }
       {data?.length ? (
-        <ul role="list" className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg">
+        <ul role="list" 
+          className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2 mt-10">
           {data.map((project) => (
-            <li key={project._id} className="flex justify-between gap-x-6 px-5 py-10">
+            <li key={project._id} className="flex rounded-md shadow-md shadow-emerald-800 justify-between gap-x-6 px-5 py-10 bg-white">
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto space-y-2">
+                  <p className="text-sm text-gray-400">
+                    <Badges rolLabel={ isManager( project.manager , userAuth!._id )? 'Manager' : 'Colaborador'} />
+                  </p>
                   <Link to={`/projects/${project._id}`}
                     className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold"
                   >{project.projectName}</Link>

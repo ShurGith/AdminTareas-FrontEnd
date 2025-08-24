@@ -34,9 +34,9 @@ export default function TaskList({ tasks }: TaskListProps) {
     <>
       <h2 className="text-5xl font-black my-10">Tareas</h2>
 
-      <div className='flex gap-5 overflow-x-scroll 2xl:overflow-auto pb-32'>
+      <div className='flex gap-5 overflow-x-scroll 2xl:overflow-auto pb-32 w-full'>
         {Object.entries(groupedTasks).map(([status, tasks]) => (
-          <div key={status} className='min-w-[300px] 2xl:min-w-0 2xl:w-1/5'>
+          <div key={status} className='min-w-[500px] 2xl:min-w-0 2xl:w-1/5'>
             <h3 className={`capitalize text-sm font-light border border-slate-300  ${statusColors[status]} border-t-8  bg-white p-3`}>{statusTranslations[status]}</h3>
             <ul className='mt-5 space-y-5'>
               {tasks.length === 0 ? (

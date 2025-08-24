@@ -26,6 +26,7 @@ export default function TaskCard({ task }: TaskCardProps) {
             queryClient.invalidateQueries({ queryKey: ['project', projectId] })
         }
     })
+    console.log(task)
 
   return (
     <>

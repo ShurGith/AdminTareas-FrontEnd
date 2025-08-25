@@ -26,8 +26,6 @@ export default function ProjectDetailsView() {
     return userAuth?._id === data?.manager
   }, [userAuth, data])
 
-  console.log(canEdit);
-
   if (isLoading && authLoading) return <p>Cargando...</p>
   if (isError) return <Navigate to="/404" />
   if (data && userAuth) return (

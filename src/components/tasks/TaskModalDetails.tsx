@@ -8,6 +8,7 @@ import { formatDate } from '@/utils/utils';
 import { statusTranslations } from "@/locales/es";
 import { TaskStatus } from '@/types';
 import TaskStatusCard from './TaskStatusCard';
+import NotesPanel from '@/components/notes/NotesPanel';
 
 export default function TaskModalDetails() {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ export default function TaskModalDetails() {
     const data = { projectId, taskId, status }
     mutate(data)
   };
+  let num = 1;
 
   if (isError) {
     toast.error(error.message, { toastId: 'error' });
@@ -83,7 +85,7 @@ export default function TaskModalDetails() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <DialogPanel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
+                <DialogPanel className="w-full max-w-6xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
                   <div className='flex gap-2 text-sm text-slate-400'>
                     <p className='text-sm text-slate-400 underline'>Agregada el:</p>
                     <p>{formatDate(data.createdAt)}</p>
@@ -98,12 +100,14 @@ export default function TaskModalDetails() {
                   >{data.name}
                   </DialogTitle>
                   <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
+
                   {data.completedBy && data.completedBy.length > 0 && (
-                    <ul className="grid grid-cols-4 flex-wrap gap-4 list-decimal">
+                    <ul className="grid grid-cols-4 flex-wrap gap-4 ">
                       {data.completedBy.map((activityLog) => (
                         <TaskStatusCard
                           key={activityLog._id}
                           activityLog={activityLog}
+                          num = {num++}
                         />
                       ))}
                     </ul>
@@ -113,7 +117,7 @@ export default function TaskModalDetails() {
                       <select
                         onChange={handleChange}
                         defaultValue={data.status}
-                        className='w-full p-3 border border-slate-300 rounded-md'>
+                        className='w-full p-3 border border-slate-300 rounded-md cursor-pointer'>
                         {Object.entries(statusTranslations).map(([key, value]) => (
                           <option key={key} value={key} >
                             {value}
@@ -122,6 +126,10 @@ export default function TaskModalDetails() {
                       </select>
                     </label>
                   </div>
+                
+                  <NotesPanel 
+                    notes={data.notes}
+                  />
                 </DialogPanel>
               </TransitionChild>
             </div>

@@ -1,3 +1,4 @@
+import { create } from 'domain'
 import { z } from 'zod'
 
 /** Auth & Users */
@@ -30,6 +31,17 @@ export const userSchema = authSchema.pick({
 export type User = z.infer<typeof userSchema>
 export type UserProfileForm = Pick<User, 'name' | 'email'>
 
+/** Notes */
+export const noteSchema = z.object({
+    _id: z.string(),
+    content: z.string(),
+    createdBy: userSchema,
+    task: z.string(),
+    createdAt: z.string(),
+})
+export type Note = z.infer<typeof noteSchema>
+export type NoteFormData = Pick<Note, 'content'>
+
 
 /** Tasks */
 export const taskStatusSchema = z.enum(["pending", "onHold", "inProgress", "underReview", "completed"])
@@ -46,6 +58,9 @@ export const taskSchema = z.object({
         _id: z.string(),
         user: userSchema,
         status: taskStatusSchema
+    })),
+    notes: z.array(noteSchema.extend({
+        createdBy: userSchema
     })),
     createdAt: z.string(),
     updatedAt: z.string()
@@ -67,7 +82,6 @@ export const taskListSchema = taskProjectSchema.pick({
 export type Task = z.infer<typeof taskSchema>
 export type TaskFormData = Pick<Task, 'name' | 'description'>
 export type TaskProject = z.infer<typeof taskProjectSchema>
-export type TaskLista = z.infer<typeof taskListSchema>
 
 /** Projects */
 export const projectSchema = z.object({

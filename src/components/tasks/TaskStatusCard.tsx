@@ -15,15 +15,15 @@ type TaskStatusCardProps = {
 function TaskStatusCard({activityLog}: TaskStatusCardProps) {
     const config = TASK_STATUS_CONFIG[activityLog.status];
   return (
-    <div>         
+    <li>         
       <p key={activityLog._id} className="flex items-center gap-1">
         <span
-          className={`text-sm rounded-md px-2 py-0.5 inline-block border ${config.bgColorClass} ${config.textColorClass} ${config.borderColorClass} `}
+          className={`text-sm rounded-md p-1 inline-block border ${config.bgColorClass} ${config.textColorClass} ${config.borderColorClass} `}
         >
           {config.label} - {activityLog.user.name}
         </span>
       </p>
-    </div>
+    </li>
   )
 }
 

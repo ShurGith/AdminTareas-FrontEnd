@@ -99,11 +99,14 @@ export default function TaskModalDetails() {
                   </DialogTitle>
                   <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
                   {data.completedBy && data.completedBy.length > 0 && (
-                    <div className="grid grid-cols-3 flex-wrap gap-2">
+                    <ul className="grid grid-cols-4 flex-wrap gap-4 list-decimal">
                       {data.completedBy.map((activityLog) => (
-                        <TaskStatusCard key={activityLog._id} activityLog={activityLog} />
+                        <TaskStatusCard
+                          key={activityLog._id}
+                          activityLog={activityLog}
+                        />
                       ))}
-                    </div>
+                    </ul>
                   )}
                   <div className='my-5 space-y-3'>
                     <label className='text-sm text-slate-500'>Estado Actual:{statusTranslations[data.status]}

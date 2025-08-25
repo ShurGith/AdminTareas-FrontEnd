@@ -2,7 +2,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Note } from '@/types'
 import { formatDate } from '@/utils/utils'
 import { useMemo } from 'react';
-
+import { AiFillDelete } from 'react-icons/ai';
 type NoteDetailProps = { 
   note: Note,
   index:number
@@ -28,9 +28,11 @@ if(isLoading || !data){
             {canDelete && (
                 <button
                     type="button"
-                    className="rounded-md bg-red-400 hover:bg-red-500 p-2 text-xs text-white font-bold cursor-pointer transition-colors"
+                    className="inline-flex items-center rounded-md bg-red-400 hover:bg-red-500 p-2 text-xs text-white hover:text-black font-bold cursor-pointer transition-colors"
                     onClick={() => {console.log("eliminar")}}
-                >Eliminar</button>
+                >
+                <AiFillDelete className='w-6 h-6 mr-2' />
+                  Eliminar</button>
             )}
             </div>
       </div>

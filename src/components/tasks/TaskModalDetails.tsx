@@ -86,21 +86,14 @@ export default function TaskModalDetails() {
                 leaveTo="opacity-0 scale-95"
               >
                 <DialogPanel className="w-full max-w-6xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                  <div className='flex gap-2 text-sm text-slate-400'>
-                    <p className='text-sm text-slate-400 underline'>Agregada el:</p>
-                    <p>{formatDate(data.createdAt)}</p>
-                  </div>
-                  <div className='flex gap-2 text-sm text-slate-400'>
-                    <p className='text-sm text-slate-400 underline'>Última actualización:</p>
-                    <p> {formatDate(data.updatedAt)}</p>
-                  </div>
+              
                   <DialogTitle
                     as="h3"
                     className="font-black text-4xl text-slate-600 my-5"
                   >{data.name}
                   </DialogTitle>
                   <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
-
+                
                   {data.completedBy && data.completedBy.length > 0 && (
                     <ul className="grid grid-cols-4 flex-wrap gap-4 ">
                       {data.completedBy.map((activityLog) => (
@@ -111,9 +104,9 @@ export default function TaskModalDetails() {
                         />
                       ))}
                     </ul>
-                  )}
-                  <div className='my-5 space-y-3'>
-                    <label className='text-sm text-slate-500'>Estado Actual:{statusTranslations[data.status]}
+                  )}  
+                  <div className="border grid grid-cols-3 py-8 px-4 mt-8 space-x-4">
+                    <label className='text-sm text-slate-500 flex items-center gap-1'>Estado: 
                       <select
                         onChange={handleChange}
                         defaultValue={data.status}
@@ -125,8 +118,11 @@ export default function TaskModalDetails() {
                         ))}
                       </select>
                     </label>
-                  </div>
-                
+                    <div className='col-span-2 border items-center justify-center flex flex-col gap-2'>
+                      <p className='text-sm text-slate-400'>Creado: {formatDate(data.createdAt)}</p>
+                      <p className='text-sm text-slate-400'>Actualizado: {formatDate(data.updatedAt)}</p>
+                    </div>
+                </div>
                   <NotesPanel 
                     notes={data.notes}
                   />
